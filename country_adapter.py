@@ -16,12 +16,18 @@ def get_all_currency_codes():
 	return codes
 
 def get_country_currencies(name):
+	"""
+	Take a partial or full country name and return its currencies
+	"""
 	res = requests.get("https://restcountries.eu/rest/v2/name/{}".format(name))
 	res.content.decode('utf-8')
 	country = res.json()[0]
-	return country["currencies"]
+	return {
+		'name': country["name"],
+		'currencies': country["currencies"]
+	}
 
-def get_currency_country(currency):
+def get_currency_countries(currency):
 	res = requests.get("https://restcountries.eu/rest/v2/currency/{}".format(currency))
 	formatted = res.json()
 	countries = []

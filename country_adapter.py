@@ -15,7 +15,7 @@ def get_all_currency_codes():
 		codes.append((country["name"], currs))
 	return codes
 
-def get_country_currency(name):
+def get_country_currencies(name):
 	res = requests.get("https://restcountries.eu/rest/v2/name/{}".format(name))
 	res.content.decode('utf-8')
 	country = res.json()[0]

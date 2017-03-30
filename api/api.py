@@ -1,6 +1,6 @@
 import json
 from flask import Flask, jsonify
-from country_adapter import get_country_currencies, get_currency_countries
+from country_adapter import get_country_currencies, get_currency_countries, get_all_currency_codes
 from rate_adapter import get_rate
 
 app = Flask(__name__)
@@ -8,6 +8,11 @@ app = Flask(__name__)
 @app.route('/country/<name>')
 def country_to_currency(name):
 	currencies = get_country_currencies(name)
+	return jsonify(currencies)
+
+@app.route('/currency/codes')
+def all_codes():
+	currencies = get_all_currency_codes()
 	return jsonify(currencies)
 
 @app.route('/currency/<currency_code>')
@@ -32,4 +37,4 @@ def convert(source, dest, amount):
 	return jsonify(response)
 
 if __name__ == '__main__':
-	app.run()
+	app.run(port=5001)

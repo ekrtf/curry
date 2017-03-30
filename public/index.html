@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Curry</title>
+	<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+	<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+</head>
+
+<body>
+	<style>
+		.main__converter__body {
+			display: flex;
+			justify-content: space-around;
+		}
+		.main__converter__body__item {
+			display: flex;
+			flex-direction: column;
+		}
+	</style>
+	<section id="converter" class="main__converter">
+		<h1>Converter</h1>
+		<div class="main__converter__body">
+			<div class="main__converter__body__item">
+				<select id="converter-source"></select>
+				<input type="text" />
+			</div>
+			<div class="main__converter__body__item">
+				<select id="converter-dest"></select>
+				<input type="text" />
+			</div>
+		</div>
+	</section>
+
+	<script>
+		$(document).ready(function() {
+			var sourceSelect = document.getElementById('converter-source');
+			var destSelect = document.getElementById('converter-dest');
+
+			// fetch currency codes
+			$.ajax({
+				url: 'http://localhost:5000/codes',
+				method: 'GET',
+				success: function(res) {
+					// TODO: wrap in try catch
+					const parsed = JSON.parse(res);
+
+					_.forEach(parsed, (arr, country) => {
+						_.forEach(arr, code => {
+							var opt = document.createElement('option');
+							opt.innerHTML = code;
+							sourceSelect.appendChild(opt);
+							destSelect.appendChild(opt);
+						});
+					});
+				},
+				error: function() {
+					console.log(arguments)
+				}
+			})
+		});
+	</script>
+</body>
+
+</html>

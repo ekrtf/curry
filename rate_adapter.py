@@ -10,5 +10,3 @@ def get_rate(source, dest):
 	}
 	res = requests.get('http://apilayer.net/api/live', params=payload).json()
 	return next(res['quotes'].itervalues())
-
-print get_rate('USD', 'EUR')

@@ -1,6 +1,6 @@
 import requests
 
-key = "8ee81402f0f1373c35aac807d814325d"
+key = "YOUR-KEY"
 
 def get_rate(source, dest):
 	payload = {
